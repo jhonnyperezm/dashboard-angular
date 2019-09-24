@@ -12,10 +12,10 @@ export class SidebarService {
       hrefp: 'prueba',
       submenu: [
         { titulo: 'Dashboard', url: '/dashboard' },
-        { titulo: 'ProgressBar', url: '/progress' },
-        { titulo: 'Gráficas', url: '/graficas1' },
-        { titulo: 'Promesas', url: '/promesas' },
-        { titulo: 'RxJs', url: '/rxjs' }
+        { titulo: 'prueba1', url: '/progress' },
+        { titulo: 'prueba2', url: '/graficas1' },
+        { titulo: 'prueba3', url: '/promesas' },
+        { titulo: 'prueba4', url: '/rxjs' }
       ]
     },
     {
@@ -25,8 +25,8 @@ export class SidebarService {
       hrefp: 'prueba1',
       submenu: [
         { titulo: 'Usuarios', url: '/usuarios' },
-        { titulo: 'Hospitales', url: '/hospitales' },
-        { titulo: 'Medicos', url: '/medicos' }
+        { titulo: 'Gym', url: '/hospitales' },
+        { titulo: 'Rutinas', url: '/medicos' }
       ]
     },
     {
