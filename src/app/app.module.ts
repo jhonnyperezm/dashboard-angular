@@ -8,13 +8,19 @@ import { SharedModule } from './shared/shared.module';
 import { PagesComponent } from './pages/pages.component';
 import { LoginComponent } from './login/login.component';
 import { GraficasComponent } from './page/graficas/graficas.component';
+import { ConfiguracionesComponent } from './pages/configuraciones/configuraciones.component';
+import { ComprasComponent } from './pages/compras/compras.component';
+import { GestorComponent } from './pages/gestor/gestor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PagesComponent,
     LoginComponent,
-    GraficasComponent
+    GraficasComponent,
+    ConfiguracionesComponent,
+    ComprasComponent,
+    GestorComponent
   ],
   imports: [
     BrowserModule,

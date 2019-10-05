@@ -6,6 +6,34 @@ import { Injectable } from '@angular/core';
 export class SidebarService {
   menu: any = [
     {
+      titulo: 'Compras',
+      icono: 'mdi mdi-shopping menu-icon',
+      href: '#Compras',
+      hrefp: 'Compras',
+      submenu: [
+        { titulo: 'Compras', url: '/Compras/Compras' },
+      ]
+    },
+    {
+      titulo: 'Gestor',
+      icono: 'mdi mdi-shopping menu-icon',
+      href: '#gestor',
+      hrefp: 'gestor',
+      submenu: [
+        { titulo: 'Inicio', url: '/gestor/inicio' },
+        { titulo: 'Puntos', url: '/gestor/puntos' },
+      ]
+    },
+    {
+      titulo: 'Configuraciones',
+      icono: 'mdi mdi-home menu-icon',
+      href: '#cliente',
+      hrefp: 'cliente',
+      submenu: [
+        { titulo: 'Cliente', url: '/Cliente' }
+      ]
+    },
+    {
       titulo: 'Principal',
       icono: 'mdi mdi-home menu-icon',
       href: '#prueba',
