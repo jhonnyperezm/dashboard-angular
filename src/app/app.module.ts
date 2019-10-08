@@ -11,6 +11,8 @@ import { GraficasComponent } from './page/graficas/graficas.component';
 import { ConfiguracionesComponent } from './pages/configuraciones/configuraciones.component';
 import { ComprasComponent } from './pages/compras/compras.component';
 import { GestorComponent } from './pages/gestor/gestor.component';
+import {HttpClientModule} from '@angular/common/http';
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { GestorComponent } from './pages/gestor/gestor.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
+    ToastrModule.forRoot(),
     SharedModule,
     PipeModule
   ],

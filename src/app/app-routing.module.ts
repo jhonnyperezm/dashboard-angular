@@ -16,21 +16,25 @@ const routes: Routes = [
   {
     path: '',
     component: PagesComponent,
+    // canLoad: [RutasGuard],
     loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
   },
   {
     path: '',
     component: ConfiguracionesComponent,
+    // canLoad: [RutasGuard],
     loadChildren: () => import('./pages/configuraciones/configuraciones.module').then(m => m.ConfiguracionesModule)
   },
   {
     path: 'Compras',
     component: ComprasComponent,
+    // canLoad: [RutasGuard],
     loadChildren: () => import('./pages/compras/compras.module').then(m => m.ComprasModule)
   },
   {
     path: 'gestor',
     component: GestorComponent,
+    canLoad: [RutasGuard],
     loadChildren: () => import('./pages/gestor/gestor.module').then(m => m.GestorModule)
   },
   {

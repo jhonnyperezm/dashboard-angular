@@ -1,15 +1,132 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
+import {LoginService} from './login.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
-  constructor() { }
+  token: any;
+  DatosLogin: any;
+  datosToken: any;
+  app: any;
+  datosTokenSec: any;
+  privateIP: any;
+  DataNewUser: any = [];
+  LoadingIndicator = true;
 
-  ngOnInit() {
+
+  @ViewChild('UsuarioForm', {static: false})
+  private UsuarioForm: NgForm;
+
+  constructor(
+    public router: Router,
+    public loginService: LoginService,
+    public toastr: ToastrService
+  ) {
+    this.privateIP = sessionStorage.getItem('IpLocal');
   }
 
+  refresh() {
+    this.router.navigate(['']);
+  }
+
+  LoginUser(e) {
+
+    e.preventDefault();
+    const username = e.target[0].value;
+    const password = e.target[1].value;
+
+    this.loginService.postLoginCartera(username, password).subscribe(
+      data => {
+        console.log('que llega data', data);
+        this.token = data;
+        if (this.token !== '') {
+          this.VerificarCartera(this.token);
+        } else {
+          this.VerificarConfiguraciones(username, password);
+        }
+      }
+    );
+  }
+
+  VerificarCartera(token) {
+    this.loginService.decodeTokenCi(token).subscribe(
+      data => {
+        this.datosToken = data;
+        localStorage.setItem('token', token);
+        localStorage.setItem('tokenCliente', token);
+        localStorage.setItem('user_email', this.datosToken.user_email);
+        localStorage.setItem('user', this.datosToken.user);
+        localStorage.setItem('rol', this.datosToken.rol);
+        localStorage.setItem('id_rol', this.datosToken.id_rol);
+        localStorage.setItem('creadoPor', this.datosToken.creadoPor);
+        localStorage.setItem('cli', this.datosToken.idClienteConf);
+        localStorage.setItem('logConf', '0');
+        localStorage.setItem('menuConf', '0');
+        this.router.navigate(['home']);
+      }
+    );
+  }
+
+  VerificarConfiguraciones(username, password) {
+    this.loginService.postLogin(username, password, this.privateIP).subscribe(
+      data => {
+        this.token = data;
+        console.log(this.token);
+        if (this.token === 'usuario o clave incorrecta') {
+          this.toastr.error('Error! Usuario o  Contraseña  Incorrectos, verifique e intente nuevamente ');
+        } else if (this.token === 'El usuario esta desctivado') {
+          this.toastr.error('Error! El usuario esta desactivado');
+        } else {
+          this.loginService.decodeToken(this.token).subscribe(
+            data2 => {
+              console.log(data2);
+              this.datosToken = data2;
+              this.datosTokenSec = data2;
+              localStorage.setItem('token', this.token);
+              localStorage.setItem('tokenCliente', this.token);
+              localStorage.setItem('user_email', this.datosToken.user_email);
+              localStorage.setItem('user', this.datosToken.user);
+              localStorage.setItem('rol', this.datosToken.rol);
+              localStorage.setItem('id_rol', this.datosToken.id_rol);
+              localStorage.setItem('creadoPor', this.datosToken.creadoPor);
+              localStorage.setItem('cli', this.datosToken.idCliente);
+              localStorage.setItem('idU', this.datosToken.idUsuario);
+              localStorage.setItem('logConf', '1');
+              localStorage.setItem('close', '1');
+              localStorage.setItem('is', this.datosToken.inicioSesion);
+              localStorage.setItem('un', this.datosToken.nombre);
+
+              this.router.navigate(['/dashboard']);
+            }
+          );
+        }
+
+      }
+    );
+  }
+
+  CambiarClave(DatosUsuario) {
+    console.log(DatosUsuario);
+    this.loginService.updateClave(DatosUsuario).subscribe(
+      data => {
+        console.log(data);
+        if (data === 'no se pudo enviar el correo') {
+          this.toastr.error('Error! Ocurrio un error enviando el correo, comuniquese con el administrador ');
+        } else {
+          this.toastr.success('Exitoso! Se ha enviado un mensaje al correo registrado');
+        }
+      });
+
+  }
+
+  LimpiarFormUsuarios() {
+    this.UsuarioForm.reset();
+  }
 }
